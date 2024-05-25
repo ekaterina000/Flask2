@@ -1,0 +1,10 @@
+{% extends "baseTemplate.html" %}
+
+
+{% block content %}
+    {% if user %}
+        <h1>Welcome to IT-Company "K&K", {{ current_user.username }}</h1>
+    {% else %}
+        <h1>Hello Stranger</h1>
+    {% endif %}
+{% endblock %}

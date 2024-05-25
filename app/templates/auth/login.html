@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    {% from 'bootstrap5/form.html' import render_form %}
+    {{ bootstrap.load_css() }}
+    {{ bootstrap.load_js() }}
+</head>
+<body>
+<h1>Авторизация</h1>
+    <form class="col-lg-3 mx-auto" method="post">
+        {{ render_form(form) }}
+    </form>
+</body>
+</html>

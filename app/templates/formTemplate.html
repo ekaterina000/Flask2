@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Зарегистрироваться</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffebee;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: #e91e63;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group label {
+            color: #e91e63;
+            font-weight: bold;
+        }
+        .form-control:focus {
+            border-color: #e91e63;
+            box-shadow: 0 0 0 0.2rem rgba(233, 30, 99, 0.25);
+        }
+        .btn-primary {
+            background-color: #e91e63;
+            border-color: #e91e63;
+        }
+        .btn-primary:hover {
+            background-color: #c2185b;
+            border-color: #c2185b;
+        }
+        .btn-primary:active,
+        .btn-primary:focus {
+            background-color: #8e124b !important;
+            border-color: #8e124b !important;
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="form-container">
+            <h1>Зарегистрироваться</h1>
+            <form method="POST" action="{{ url_for('main.form') }}">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <label for="username">{{ form.username.label }}</label>
+                    {{ form.username(class="form-control", id="username") }}
+                </div>
+               <div class="form-group">
+                    <label for="email">{{ form.email.label }}</label>
+                    {{ form.email(class="form-control", id="email") }}
+                </div>
+                <div class="form-group">
+                    <label for="password">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control", id="password") }}
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">{{ form.confirm_password.label }}</label>
+                    {{ form.confirm_password(class="form-control", id="confirm_password") }}
+                </div>
+            <div class="form-group">
+                <label for="gender">{{ form.gender.label }}</label>
+                  {{ form.gender(class="form-control", id="gender") }}
+               </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Готово</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
