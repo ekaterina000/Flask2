@@ -37,20 +37,8 @@ def production_calendar():
 
 
 
-@main.route('/form', methods=['GET', 'POST'])
-def form():
-    form = UserForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is not None:
-            session['auth'] = True
-            confirm(user)
-        else:
-            session['auth'] = False
-        return redirect(url_for('index'))
-    return render_template('formTemplate.html', form=form,auth=session.get('auth'))
 
-@main.route('/profile', methods=['GET', 'POST'])
+'''@main.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'POST':
         session['username'] = request.form.get('username')
@@ -63,27 +51,16 @@ def profile():
     gender = session.get('gender')
 
     return render_template('profile.html', username=username, email=email, gender=gender)
-
-'''@main.route('/logout')
-def logout():
-    if session.get('auth'):
-        session['auth'] = False
-    return redirect(url_for('index'))'''
-
-@main.route('/confirm_auth')
-def confirm(user):
-    send_mail('k27112999@gmail.com','Добро пожаловать!', 'send_mail', user=user)
-    redirect(url_for('index'))
-
-def send_mail(to, subject, template, **kwargs):
-    msg = Message(subject,
-                  sender=main.config['MAIL_USERNAME'],
-                  recipients=[to])
-    msg.body = render_template(template+".txt", **kwargs)
-    msg.html = render_template(template+".html", **kwargs)
-    mail.send(msg)
+'''
 
 @main.route('/secret')
 @login_required
 def secret():
     return "Only for auth"
+
+
+@main.route("/testConfirm")
+def testConfirm():
+    user = User.query.filter_by().first()
+    tmp = user.generate_confirmation_token()
+    user.confirm(tmp)
