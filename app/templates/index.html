@@ -2,9 +2,36 @@
 
 
 {% block content %}
-    {% if user %}
-        <h1>Welcome to IT-Company "K&K", {{ current_user.username }}</h1>
-    {% else %}
-        <h1>Hello Stranger</h1>
-    {% endif %}
+<div class="jumbotron" style="background-color: rgba(255, 255, 255, 0.8);">
+    <h1 class="display-4" >Добро пожаловать в эту замечательную книгу рецептов!</h1>
+    <p class="lead">Вы можете найти множество различных полезных и быстрых рецептов от Екатерины Карасенко</p>
+    <div class="d-flex justify-content-end">
+        {% if current_user.is_authenticated %}
+            {% if current_user.is_admin() %}
+                <a href="{{ url_for('main.create_recipe') }}" class="btn btn-custom btn-lg">Создать рецепт</a>
+            {% else %}
+                <a href="{{ url_for('main.recipes') }}" class="btn btn-custom btn-lg">Открыть книгу</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-custom btn-lg">Регистрация</a>
+        {% endif %}
+    </div>
+</div>
+
+
+
+
+<div class="row">
+    {% for recipe in recipes %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">{{ recipe.description }}</p>
+                <a href="{{ url_for('main.recipe_detail', recipe_id=recipe.id) }}" class="btn btn-primary">Открыть книгу</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

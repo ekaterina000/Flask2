@@ -1,0 +1,41 @@
+{% extends 'baseTemplate.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4" style="background-color: rgba(255, 255, 255, 0.8);">
+            <h1 class="text-center mb-4" style="font-weight: 400; font-size: 2.5rem;">Создать рецепт</h1>
+            <form method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.title.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.title(class="form-control", style="font-weight: 400; font-size: 1rem; box-shadow: none; outline: none;") }}
+                </div>
+                <div class="form-group">
+                    {{ form.description.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.description(class="form-control", rows=3, style="font-weight: 400; font-size: 1rem; box-shadow: none; outline: none;") }}
+                </div>
+                <div class="form-group">
+                    {{ form.ingredients.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.ingredients(class="form-control", rows=5, style="font-weight: 400; font-size: 1rem; box-shadow: none; outline: none;") }}
+                </div>
+                <div class="form-group">
+                    {{ form.prep_time.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.prep_time(class="form-control", style="font-weight: 400; font-size: 1rem; box-shadow: none; outline: none;") }}
+                </div>
+                <div class="form-group">
+                    {{ form.category.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.category(class="form-control", style="font-weight: 400; font-size: 1rem; box-shadow: none; outline: none;") }}
+                </div>
+                <div class="form-group">
+                    {{ form.image.label(style="font-weight: 400; font-size: 1rem;") }}
+                    {{ form.image(class="form-control-file", style="font-weight: 400; font-size: 1rem;") }}
+                </div>
+                <div class="form-group text-center">
+                    {{ form.submit(class="btn btn-custom btn-lg", style="font-weight: 400; font-size: 1rem;") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

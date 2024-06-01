@@ -1,26 +1,33 @@
 from flask_wtf import FlaskForm
-
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, Regexp, ValidationError
-
-from app.models import User
+from app.models import User, Role
 
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember me')
-    submit = SubmitField("Log in")
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField("Войти")
 
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 64),
-                                                   Regexp('[A-Za-z][A-Za-z0-9_.]*$', 0,
-                                                          'Username must have only letters, numbers, dots, and underscores')])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message="Password doesn't match")])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField('Register')
+    username = StringField('Имя', validators=[
+        DataRequired(), Length(1, 64),
+        Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
+               'Username must contain only letters, numbers, dots, or underscores')
+    ])
+    password = PasswordField('Пароль', validators=[
+        DataRequired(), EqualTo('password2', message="Passwords must match")
+    ])
+    password2 = PasswordField('Подтвердите пароль', validators=[DataRequired()])
+    role = SelectField('Role', coerce=int, validators=[DataRequired()])
+    submit = SubmitField('Зарегистрироваться')
+
+    def __init__(self, *args, **kwargs):
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.role.choices = [(role.id, role.name) for role in Role.query.all()]
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():

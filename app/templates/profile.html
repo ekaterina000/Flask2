@@ -1,70 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Данные пользователя</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <meta charset="UTF-8">
-    {{ bootstrap.load_css() }}
-    {{ bootstrap.load_js() }}
-    <link rel="icon" href="{{ url_for('static', filename="favicon.png") }}" type="image/x-icon">
-    {% block navbar %}
-      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e91e63;">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Workers IT Company "K&K"</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              </ul>
-              <div class="d-flex">
+{% extends 'baseTemplate.html' %}
 
-                  <a class="btn btn-outline-light" href="{{ url_for('logout') }}" role="button">Exit</a>
-
-              </div>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card" style="background-color: rgba(255, 255, 255, 0.8);">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4" style="font-weight: 400;">Ваш профиль</h1>
+                <div class="card-text" style="font-weight: 400;">
+                    <p>Email: {{ current_user.email }}</p>
+                    <p>Роль: {{ current_user.role }}</p>
+                    <p>Был(а) в сети: {{ current_user.last_seen }}</p>
+                </div>
             </div>
-          </div>
-      </nav>
-    {% endblock %}
-    <style>
-      body {
-        background-color: #ffebee;
-        font-family: Arial, sans-serif;
-      }
-
-      .container {
-        max-width: 500px;
-        margin: 0 auto;
-        padding: 30px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-      }
-
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #e91e63;
-      }
-
-      p {
-        font-size: 16px;
-        margin-bottom: 15px;
-        color: #555;
-      }
-
-      .form-control-static {
-        font-weight: bold;
-        color: #e91e63;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container my-5">
-      <h1>Профиль пользователя</h1>
-      <p>Логин: <span class="form-control-static">{{ username }}</span></p>
-      <p>Email: <span class="form-control-static">{{ email }}</span></p>
-      <p>Пол: <span class="form-control-static">{{ 'Мужской' if gender=='M' else 'Женский' }}</span></p>
+        </div>
     </div>
-  </body>
-</html>
+</div>
+{% endblock %}

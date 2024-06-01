@@ -1,149 +1,76 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Workers IT Company "K&K"</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    {{ bootstrap.load_css() }}
-    {{ bootstrap.load_js() }}
-    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon">
-    <style>
-      body {
-  background-color: #f8f9fa;
-  font-family: Arial, sans-serif;
-}
+    <title>{% block title %}Книга рецептов K&K{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<style>
+    .btn-custom {
+        background-color: #343a40;
+        border-color: #343a40;
+        color: #fff;
+        outline: none !important;
+        box-shadow: none !important;
+    }
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
+    .btn-custom:hover {
+        background-color: #23272b;
+        border-color: #1d2124;
+        color: #fff;
+    }
 
-h1, h2, h3 {
-  color: #e91e63;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-p {
-  font-size: 16px;
-  color: #555;
-}
-
-.info-box {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.info-box h3 {
-  margin-top: 0;
-}
-
-.btn-primary {
-  background-color: #e91e63;
-  border-color: #e91e63;
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background-color: #c1134e;
-  border-color: #c1134e;
-  color: #fff;
-}
-
-.btn-primary:active,
-.btn-primary:focus {
-  background-color: #a30e3e !important;
-  border-color: #a30e3e !important;
-  color: #fff !important;
-  box-shadow: none !important;
-}
-
-#current-time {
-  font-size: 2rem;
-  color: #e91e63;
-  margin-bottom: 1rem;
-}
-
-    </style>
-  </head>
-  <body>
-    {% block navbar %}
-      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #e91e63;">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Workers IT Company "K&K"</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            </ul>
-            <div class="d-flex">
-                {% if current_user.is_authenticated %}
-                    <a class="btn btn-outline-light" href="{{ url_for('auth.logout') }}" role="button">Выйти</a>
-                {% else %}
-                    <a class="btn btn-outline-light" href="{{ url_for('auth.register') }}" role="button">Авторизоваться</a>
-                {% endif %}
+    .btn-custom:active,
+    .btn-custom:focus {
+        background-color: #1d2124;
+        border-color: #171a1d;
+        color: #fff;
+    }
+</style>
+<body style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); background-size: cover; background-repeat: no-repeat; background-position: center; min-height: 100vh;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3c4a5c;">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">Книга рецептов K&K</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.index') }}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.recipes') }}">Рецепты</a>
+                    </li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('main.profile') }}">Профиль</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Выход</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.login') }}">Вход</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.register') }}">Регистрация</a>
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
-          </div>
         </div>
-      </nav>
-    {% endblock %}
+    </nav>
 
-    <div class="container d-flex flex-column">
-      <p id="current-time" class="align-self-start"></p>
-      <div class="flex-grow-1">
-        <h1>{% block content %}{% endblock %}</h1>
+    <div class="container my-5">
 
-        <div class="info-box">
-          <h3>Working Hours</h3>
-          <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-          <p>Saturday: 10:00 AM - 3:00 PM</p>
-          <p>Sunday: Closed</p>
-        </div>
 
-        <div class="info-box">
-          <h3>Calendar</h3>
-          <p>Today: <span class="font-weight-bold">{{ today.strftime('%A, %B %d, %Y') }}</span></p>
-          <div class="text-center">
-            <a href="{{ url_for('static', filename='proizvodstvennyy-kalendar-na-2024-god-2_(2).png') }}" target="_blank" class="btn btn-primary">Просмотреть календарь</a>
-          </div>
-        </div>
-
-        <div class="info-box">
-          <h3>Management</h3>
-          <p>CEO: </p>
-          <p>CTO: </p>
-          <p>CFO: </p>
-        </div>
-
-        <div class="info-box">
-          <h3>Resources</h3>
-
-          <p>Employee Handbook: <a href="#">Download</a></p>
-          <p>IT Support Portal: <a href="#">Visit</a></p>
-          <p>Training Materials: <a href="#">Access</a></p>
-        </div>
-      </div>
+        {% block content %}{% endblock %}
     </div>
 
-    <script>
-      function updateTime() {
-        const now = new Date();
-        const hours = now.getHours().toString().padStart(2, '0');
-        const minutes = now.getMinutes().toString().padStart(2, '0');
-        const seconds = now.getSeconds().toString().padStart(2, '0');
-        const currentTime = `${hours}:${minutes}:${seconds}`;
-        document.getElementById('current-time').textContent = currentTime;
-      }
-
-      setInterval(updateTime, 1000);
-    </script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>
