@@ -2,7 +2,8 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin, AnonymousUserMixin
 import jwt
-from . import db, login_manager
+from . import db, login_manager,admin
+from flask_admin.contrib.sqla import ModelView
 
 
 class Permission:
@@ -170,3 +171,6 @@ def load_user(user_id):
 
 
 login_manager.anonymous_user = AnonymousUser
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Review, db.session))
+admin.add_view(ModelView(Recipe, db.session))
